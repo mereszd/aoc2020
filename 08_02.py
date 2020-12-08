@@ -6,9 +6,7 @@ def run_instructions(instructions):
     accum = 0
     while True:
         if i == len(instructions):
-            run = False
-            print('Found the correct sequence. Acc is {}'.format(accum))
-            break
+            return True, accum
         if i not in already_ran:
             if instructions[i][0] == 'acc':
                 accum += instructions[i][1]
@@ -22,7 +20,7 @@ def run_instructions(instructions):
                 i += 1
         else:
             break
-    return accum
+    return False, accum
 
 
 with open("08_input.txt", "r") as f:
@@ -36,11 +34,16 @@ with open("08_input.txt", "r") as f:
         instructions.append([inst, value])
 
 for j in range(len(instructions)):
+    changed = False
     if instructions[j][0] == 'nop':
         _temp = copy.deepcopy(instructions)
         _temp[j][0] = 'jmp'
-        print(run_instructions(_temp))
+        changed = True
     elif instructions[j][0] == 'jmp':
         _temp = copy.deepcopy(instructions)
         _temp[j][0] = 'nop'
-        print(run_instructions(_temp))
+        changed = True
+    if changed:
+        success, value = run_instructions(_temp)
+        if success:
+            print(value)
