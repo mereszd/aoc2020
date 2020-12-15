@@ -18,10 +18,8 @@ for i in range(len(starting) + 1, target + 1):
     # First or second time spoken
     if previous not in last_time.keys() or len(last_time[previous]) == 1:
         to_add = 0
-        # print("Turn {}, {} wasn't spoken twice before. Appending {}".format(i, previous, 0))
     else:
         to_add = last_time[previous][1] - last_time[previous][0]
-        # print("Turn {}, {} was spoken before at turns {} and {} recently. Appending {}".format(i, previous, last_time[previous][1], last_time[previous][0], to_add))
     if to_add in last_time.keys():
         if len(last_time[to_add]) == 1:
             last_time[to_add].append(i)
